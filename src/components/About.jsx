@@ -37,11 +37,11 @@ const ServiceCard = ({ index, title, icon }) => {
   }, index * 0.2);
 
   return (
-    <Tilt className="xs:w-[250px] w-full">
+    <Tilt className="w-full xs:w-[250px]">
       <div ref={cardRef} className="w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card">
-        <div className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col">
-          <img src={icon} alt="web-development" className="w-16 h-16 object-contain" />
-          <h3 className="text-white text-[20px] font-bold text-center">{title}</h3>
+        <div className="bg-tertiary rounded-[20px] py-4 px-6 xs:py-5 xs:px-12 min-h-[240px] xs:min-h-[280px] flex justify-evenly items-center flex-col">
+          <img src={icon} alt="web-development" className="w-12 h-12 xs:w-16 xs:h-16 object-contain" />
+          <h3 className="text-white text-[16px] xs:text-[18px] sm:text-[20px] font-bold text-center">{title}</h3>
         </div>
       </div>
     </Tilt>
@@ -71,13 +71,15 @@ const About = () => {
         <h2 className={styles.sectionHeadText}>Overview.</h2>
       </div>
 
-      <p ref={paragraphRef} className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]">
-        I'm a skilled software developer with experience in  JavaScript, and expertise in frameworks 
-        like React, Node.js, and Three.js. I'm a quick learner and collaborate closely with clients to create efficient, 
-        scalable, and user-friendly solutions that solve real-world problems. Let's work together to bring your ideas to life!
+      <p ref={paragraphRef} className="mt-4 text-secondary text-[14px] xs:text-[15px] sm:text-[16px] md:text-[17px] max-w-3xl leading-[24px] sm:leading-[28px] md:leading-[30px]">
+        A results-driven Associate Software Engineer with hands-on experience in frontend, full-stack development, and UI/UX design, 
+        actively contributing to live, production-grade web applications. Proficient in React.js, Next.js, Node.js, Express.js, Flask, and Figma, 
+        with strong exposure to building scalable user interfaces, integrating REST APIs, and delivering end-to-end features. 
+        Experienced in working across e-commerce, customization platforms, CRM, HRMS, and booking systems. 
+        Seeking a growth-oriented role in a collaborative engineering environment.
       </p>
 
-      <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-items-center gap-10">
+      <div className="mt-12 sm:mt-16 md:mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 justify-items-center gap-6 sm:gap-8 md:gap-10">
         {services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}

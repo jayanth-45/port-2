@@ -40,19 +40,19 @@ const FeedbackCard = ({ index, testimonial, name, designation, company, image })
   return (
     <div
       ref={cardRef}
-      className="bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full"
+      className="bg-black-200 p-6 xs:p-8 sm:p-10 rounded-2xl xs:rounded-3xl w-full xs:w-[320px]"
     >
-      <p className="text-white font-black text-[48px]">"</p>
+      <p className="text-white font-black text-[36px] xs:text-[42px] sm:text-[48px]">"</p>
 
       <div className="mt-1">
-        <p className="text-white tracking-wider text-[18px]">{testimonial}</p>
+        <p className="text-white tracking-wide xs:tracking-wider text-[14px] xs:text-[16px] sm:text-[18px] leading-relaxed">{testimonial}</p>
 
-        <div className="mt-7 flex justify-between items-center gap-1">
-          <div className="flex-1 flex flex-col">
-            <p className="text-white font-medium text-[16px]">
+        <div className="mt-5 xs:mt-6 sm:mt-7 flex justify-between items-center gap-2 xs:gap-1">
+          <div className="flex-1 flex flex-col min-w-0">
+            <p className="text-white font-medium text-[14px] xs:text-[15px] sm:text-[16px] truncate">
               <span className="blue-text-gradient">@</span> {name}
             </p>
-            <p className="mt-1 text-secondary text-[12px]">
+            <p className="mt-1 text-secondary text-[11px] xs:text-[12px] line-clamp-1">
               {designation} of {company}
             </p>
           </div>
@@ -60,7 +60,7 @@ const FeedbackCard = ({ index, testimonial, name, designation, company, image })
           <img
             src={image}
             alt={`feedback_by-${name}`}
-            className="w-10 h-10 rounded-full object-cover"
+            className="w-8 h-8 xs:w-10 xs:h-10 rounded-full object-cover flex-shrink-0"
           />
         </div>
       </div>
@@ -78,7 +78,7 @@ const Feedbacks = () => {
         </div>
       </div>
       <div
-        className={`-mt-20 pb-14 ${styles.paddingX} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10  justify-items-center`}
+        className={`-mt-12 xs:-mt-16 sm:-mt-20 pb-10 xs:pb-12 sm:pb-14 ${styles.paddingX} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xs:gap-8 sm:gap-10 justify-items-center`}
       >
         {testimonials.map((testimonial, index) => (
           <FeedbackCard key={testimonial.name} index={index} {...testimonial} />

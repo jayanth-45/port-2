@@ -23,6 +23,40 @@
   display: block;
 }
 
+/* Responsive Vertical Timeline */
+@media (max-width: 640px) {
+  .vertical-timeline-element-content {
+    padding: 1rem !important;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .vertical-timeline-element-date {
+    font-size: 0.75rem !important;
+    padding: 0.5rem !important;
+  }
+  
+  .vertical-timeline-element-icon {
+    width: 40px !important;
+    height: 40px !important;
+    left: 15px !important;
+  }
+  
+  .vertical-timeline::before {
+    left: 18px !important;
+  }
+  
+  .vertical-timeline-element-content::before {
+    left: 7px !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .vertical-timeline-element-icon {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
 .black-gradient {
   background: #000000; /* fallback for old browsers */
   background: -webkit-linear-gradient(
