@@ -1,11 +1,13 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
 
 import { styles } from "../styles";
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
+import contactConfig from "../constants/contactConfig";
 
 const Contact = () => {
   const formRef = useRef();
@@ -29,25 +31,44 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Validate form
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      toast.warning("Please fill in all fields.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+
     setLoading(true);
+
+    // EmailJS template variables - adjust these to match your EmailJS template
+    const templateParams = {
+      from_name: form.name,
+      from_email: contactConfig.YOUR_EMAIL, // ✅ YOUR Gmail
+      to_name: "Jayanth M",
+      message: form.message,
+      reply_to: form.email, // ✅ User email goes here
+    };
+    
 
     emailjs
       .send(
-        import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: form.name,
-          to_name: "Jayanth M",
-          from_email: form.email,
-          to_email: "jayanth.m003@gmail.com",
-          message: form.message,
-        },
-        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+        contactConfig.YOUR_SERVICE_ID,
+        contactConfig.YOUR_TEMPLATE_ID,
+        templateParams,
+        contactConfig.YOUR_USER_ID
       )
       .then(
-        () => {
+        (response) => {
           setLoading(false);
-          alert("Thank you. I will get back to you as soon as possible.");
+          console.log("SUCCESS!", response.status, response.text);
+          
+          toast.success("Thank you! I will get back to you as soon as possible.", {
+            position: "top-right",
+            autoClose: 5000,
+          });
 
           setForm({
             name: "",
@@ -57,9 +78,31 @@ const Contact = () => {
         },
         (error) => {
           setLoading(false);
-          console.error(error);
-
-          alert("Ahh, something went wrong. Please try again.");
+          console.error("FAILED...", error);
+          
+          // More detailed error message
+          let errorMessage = "Something went wrong. ";
+          if (error.text) {
+            errorMessage += error.text;
+          } else if (error.status === 412) {
+            errorMessage = "Template variables don't match. Please check your EmailJS template configuration.";
+          } else {
+            errorMessage += `Status: ${error.status || "Unknown"}`;
+          }
+          
+          toast.error(
+            <div>
+              <div className="font-bold mb-1">Error sending message</div>
+              <div className="text-sm">{errorMessage}</div>
+              <div className="text-xs mt-2 opacity-75">
+                Please contact me directly at {contactConfig.YOUR_EMAIL}
+              </div>
+            </div>,
+            {
+              position: "top-right",
+              autoClose: 7000,
+            }
+          );
         }
       );
   };
@@ -74,6 +117,9 @@ const Contact = () => {
       >
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact.</h3>
+        <p className="mt-3 text-secondary text-[13px] xs:text-[14px] sm:text-[15px] leading-relaxed">
+          {contactConfig.description}
+        </p>
 
         <form
           ref={formRef}
